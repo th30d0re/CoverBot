@@ -33,7 +33,7 @@ git commit -am 'Add some feature'
 # Push to the branch:
 git push origin my-new-feature
 # Submit a pull request
-\```
+
 
 ## License
 CoverBot is MIT licensed, as found in the LICENSE file.
