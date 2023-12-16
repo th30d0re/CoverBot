@@ -12,7 +12,7 @@ class OpenAIManager: ObservableObject {
     let settings: Settings?
     @Published private(set) var client: OpenAISwift?
     @Published var isLoading = false
-    private var authToken = UserDefaults.standard.string(forKey: "apiKey") ?? "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"
+    private var authToken = UserDefaults.standard.string(forKey: "apiKey") ?? "Defult-API-Key-Here"
     @Published var models = [String]()
     
     // On initialize of the OpenAIManager class, get the messages from Firestore
