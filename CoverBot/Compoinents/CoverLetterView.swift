@@ -8,13 +8,33 @@
 import SwiftUI
 
 struct CoverLetterView: View {
+    @ObservedObject var viewModel: ExpandingMessageFieldViewModel
+    @EnvironmentObject var settings: Settings
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            HStack {
+                ExpandingMessageFieldViewModel.ExpandingCustomTextField(placeholder: Text("Cover Letter"), text: $settings.response, lineLimit: 20...25)
+            }
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 10)
+        //.background(Color(.systemFill))
+        .cornerRadius(25)
+        .padding()
+        .shadow(color: Color("ShadowColor"), radius: 5, x: 0, y: 5)
+        .gesture(
+            TapGesture()
+                .onEnded { _ in
+                    //UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
+        )
+    //.background(Color(.systemBackground))
     }
 }
 
 struct CoverLetterView_Previews: PreviewProvider {
     static var previews: some View {
-        CoverLetterView()
+        CoverLetterView(viewModel: ExpandingMessageFieldViewModel())
+            .environmentObject(Settings())
     }
 }

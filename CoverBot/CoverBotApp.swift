@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-@main
+ @main
 struct CoverBotApp: App {
+    @StateObject var settings = Settings()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(presentSheet: false)
+                .environmentObject(settings)
         }
     }
 }

@@ -8,13 +8,50 @@
 import SwiftUI
 
 struct TitleView: View {
+    @State var name = "CoverBot"
+    @State var presentSheet: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Button {
+                //threadListSheet.toggle()
+            } label: {
+                Image(systemName: "circle.dashed.inset.filled")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+                    .background(Color("grayColor"))
+                    .foregroundColor(Color("TileViewColor"))
+                    .clipShape(Circle())
+                    .shadow(color: Color("ShadowColor"), radius: 5, x: 0, y: 5)
+            }
+            Text(name)
+                .font(.title).bold()
+                //.foregroundColor(Color(UIColor.label))
+            
+            Spacer()
+            
+            Button(action: {
+                self.presentSheet = true
+            }, label: {
+                Image(systemName: "gearshape")
+                    .padding(10)
+                    .background(Color("grayColor"))
+                    .foregroundColor(.white)
+                    .cornerRadius(50)
+                    .shadow(color: Color("ShadowColor"), radius: 5, x: 0, y: 5)
+            }).sheet(isPresented: $presentSheet) {
+                SettingsView(presentSheet: $presentSheet)
+                    .presentationDetents([.height(780)])
+                    .presentationDragIndicator(.visible)
+            }
+        }
+        .padding(.horizontal)
     }
 }
 
 struct TitleView_Previews: PreviewProvider {
     static var previews: some View {
-        TitleView()
+        TitleView(presentSheet: false)
     }
 }

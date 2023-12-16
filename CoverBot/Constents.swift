@@ -6,3 +6,6 @@
 //
 
 import Foundation
+
+//MARK: - internal URL's
+let EJResURL = Bundle.main.url(forResource: "EJRes(2023)", withExtension: "pdf")!
