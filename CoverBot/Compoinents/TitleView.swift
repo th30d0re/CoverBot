@@ -10,11 +10,13 @@ import SwiftUI
 struct TitleView: View {
     @State var name = "CoverBot"
     @State var presentSheet: Bool
+    @State private var threadListSheet = false
+    @EnvironmentObject var threadStore: ThreadStore
     
     var body: some View {
         HStack {
             Button {
-                //threadListSheet.toggle()
+                threadListSheet.toggle()
             } label: {
                 Image(systemName: "circle.dashed.inset.filled")
                     .resizable()
@@ -24,6 +26,10 @@ struct TitleView: View {
                     .foregroundColor(Color("TileViewColor"))
                     .clipShape(Circle())
                     .shadow(color: Color("ShadowColor"), radius: 5, x: 0, y: 5)
+            }
+            .sheet(isPresented: $threadListSheet) {
+                ThreadListView()
+                    .environmentObject(threadStore)
             }
             Text(name)
                 .font(.title).bold()
@@ -53,5 +59,6 @@ struct TitleView: View {
 struct TitleView_Previews: PreviewProvider {
     static var previews: some View {
         TitleView(presentSheet: false)
+            .environmentObject(ThreadStore())
     }
 }
