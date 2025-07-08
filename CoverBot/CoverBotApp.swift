@@ -10,10 +10,12 @@ import SwiftUI
  @main
 struct CoverBotApp: App {
     @StateObject var settings = Settings()
+    @StateObject var threadStore = ThreadStore()
     var body: some Scene {
         WindowGroup {
             ContentView(presentSheet: false)
                 .environmentObject(settings)
+                .environmentObject(threadStore)
         }
     }
 }

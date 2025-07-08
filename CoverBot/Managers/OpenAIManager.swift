@@ -71,4 +71,35 @@ class OpenAIManager: ObservableObject {
             }
         })
     }
+
+    /**
+     Sends a conversation to OpenAI API and returns the assistant response.
+     - Parameters:
+        - messages: Array of `ThreadMessage` representing the conversation so far.
+        - model: The OpenAI model to use for the request.
+        - maxTokens: Maximum number of tokens to generate.
+        - completion: Result containing the API's response string or an error.
+     */
+    func sendChat(messages: [ThreadMessage], model: OpenAIModelType, maxTokens: Int, completion: @escaping (Result<String, Error>) -> Void) {
+        var chat: [ChatMessage] = []
+
+        // Include a system prompt if available
+        let prompt = settings?.systemPrompt ?? "You are a helpful assistant."
+        chat.append(ChatMessage(role: .system, content: prompt))
+
+        for message in messages {
+            let role: ChatMessage.Role = message.isUser ? .user : .assistant
+            chat.append(ChatMessage(role: role, content: message.text))
+        }
+
+        client?.sendChat(with: chat, model: model, maxTokens: maxTokens) { result in
+            switch result {
+            case .success(let model):
+                let output = model.choices.first?.message.content ?? ""
+                completion(.success(output))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }

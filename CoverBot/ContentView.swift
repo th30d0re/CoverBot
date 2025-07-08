@@ -38,5 +38,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(presentSheet: false)
             .environmentObject(Settings())
+            .environmentObject(ThreadStore())
     }
 }
